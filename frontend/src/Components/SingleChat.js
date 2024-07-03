@@ -17,7 +17,7 @@ import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import SimplePeer from "simple-peer";
-import WebSocket from "isomorphic-ws";
+import WebSocket from "ws";
 import animationData from "../Animations/Typing.json";
 
 const API_URL = "https://my-chat-app-backend-ten.vercel.app";
