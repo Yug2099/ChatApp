@@ -9,7 +9,6 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import Lottie from "react-lottie";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import ProfileModal from "./miscellaneous/ProfileModal";
@@ -246,7 +245,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              {isTyping ? (
+              {/* {isTyping ? (
                 <div>
                   <Lottie
                     options={defaultOptions}
@@ -256,7 +255,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 </div>
               ) : (
                 <></>
-              )}
+              )} */}
               <Input
                 variant="filled"
                 bg="#E0E0E0"
