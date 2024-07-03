@@ -18,9 +18,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "https://my-group-chat.vercel.app",
-      "https://chat-g8qz7gbk1-yug2099s-projects.vercel.app",
-      "https://chatting-application-roan.vercel.app",
+      "https://mychatapp-six.vercel.app",
+      "https://my-chat-app-backend-ten.vercel.app",
+      "https://vercel.com/yug2099s-projects/my-chat-app-backend/Co8ReiQJCxfFLpUFRYtKhXdiLMKb",
+      "https://vercel.com/yug2099s-projects/mychatapp/6MUPyHNSuCXvzEEnt9NrskhJyBjG",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT"],
@@ -47,8 +48,10 @@ const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
     origin: [
-      "https://my-group-chat.vercel.app",
-      "https://chatting-application-roan.vercel.app",
+      "https://mychatapp-six.vercel.app",
+      "https://my-chat-app-backend-ten.vercel.app",
+      "https://vercel.com/yug2099s-projects/my-chat-app-backend/Co8ReiQJCxfFLpUFRYtKhXdiLMKb",
+      "https://vercel.com/yug2099s-projects/mychatapp/6MUPyHNSuCXvzEEnt9NrskhJyBjG",
     ],
     methods: ["GET", "POST"],
     credentials: true,
