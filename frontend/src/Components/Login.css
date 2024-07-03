@@ -1,0 +1,43 @@
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: auto;
+  margin: 20px;
+  /* background-color: aquamarine; */
+}
+
+.linput {
+  padding: 5px;
+  width: 100%;
+}
+
+#email,
+#password {
+  border: 1px solid #000; /* Add a black border around the input fields */
+  padding: 5px; /* Add some padding to the input fields */
+  width: 100%; /* Ensure the input fields take up the full width */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+#email:focus,
+#password:focus {
+  outline: none; /* Remove the default focus outline */
+}
+
+#submitBtn {
+  width: 100%; /* Ensure the input fields take up the full width */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#submitBtn:hover {
+  background-color: #0056b3;
+}

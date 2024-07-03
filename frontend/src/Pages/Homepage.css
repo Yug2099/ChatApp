@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 600px;
+  height: max-content;
+  margin-top: 12.5%;
+  margin-left: 30%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+#button {
+  padding: 10px 30px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 15px;
+  /* background-color: #6892c0; Default button color */
+  /* color: white; */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+button.active {
+  background-color: #72a4da; /* Active button color */
+}

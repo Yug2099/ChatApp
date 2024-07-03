@@ -1,0 +1,15 @@
+.notification-badge {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .badge {
+    position: absolute;
+    bottom: 7;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0px 5px 0.5px 5px;
+  }
