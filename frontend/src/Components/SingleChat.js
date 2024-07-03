@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import {
   Box,
@@ -17,13 +17,13 @@ import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
-import io from "socket.io-client";
+import SimplePeer from "simple-peer";
+import WebSocket from "isomorphic-ws";
 import animationData from "../Animations/Typing.json";
-// const dotenv = require("dotenv");
-// dotenv.config();
+
 const API_URL = "https://my-chat-app-backend-ten.vercel.app";
-const ENDPOINT = "https://my-chat-app-backend-ten.vercel.app";
-var socket, selectedChatCompare;
+var peer;
+var socket;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -32,6 +32,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [ws, setWs] = useState(null);
 
   const defaultOptions = {
     loop: true,
@@ -65,19 +66,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
       setMessages(data);
       setLoading(false);
-
-      if (selectedChat.isGroupChat) {
-        socket.emit("join chat", selectedChat._id);
-      } else {
-        const otherUser = selectedChat.users.find(
-          (userObj) => userObj._id !== user._id
-        );
-        socket.emit("join chat", otherUser._id);
-      }
     } catch (error) {
       toast({
-        title: "Error Occured!",
-        description: "Failed to load the Message",
+        title: "Error Occurred!",
+        description: "Failed to load the Messages",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -87,45 +79,53 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   useEffect(() => {
-    socket = io('wss://chatting-application-roan.vercel.app/socket.io/?EIO=4&transport=websocket', {
-      withCredentials: true,
-      transports: ["websocket"],
-    });
-    socket.emit("setup", user);
-    socket.on("connected", () => setSocketConnected(true));
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop typing", () => setIsTyping(false));
+    // Set up WebSocket connection for signaling
+    const wsConnection = new WebSocket("wss://my-chat-app-backend-ten.vercel.app");
+    setWs(wsConnection);
 
-    // eslint-disable-next-line
+    wsConnection.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === "offer" || message.type === "answer") {
+        peer.signal(message);
+      } else if (message.type === "message") {
+        setMessages((prevMessages) => [...prevMessages, message.data]);
+      }
+    };
+
+    wsConnection.onopen = () => {
+      setSocketConnected(true);
+    };
+
+    wsConnection.onclose = () => {
+      setSocketConnected(false);
+    };
+
+    peer = new SimplePeer({
+      initiator: true,
+      trickle: false,
+    });
+
+    peer.on("signal", (data) => {
+      wsConnection.send(JSON.stringify(data));
+    });
+
+    peer.on("data", (data) => {
+      setMessages((prevMessages) => [...prevMessages, data.toString()]);
+    });
+
+    return () => {
+      wsConnection.close();
+      peer.destroy();
+    };
   }, [user]);
 
   useEffect(() => {
     fetchMessages();
-
-    selectedChatCompare = selectedChat;
     // eslint-disable-next-line
   }, [selectedChat]);
-  console.log(notification, "------------");
-  useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
-      if (
-        !selectedChatCompare ||
-        selectedChatCompare._id !== newMessageRecieved.chat._id
-      ) {
-        //give notification
-        if (!notification.includes(newMessageRecieved)) {
-          setNotification([newMessageRecieved]);
-          setFetchAgain(!fetchAgain);
-        }
-      } else {
-        setMessages([...messages, newMessageRecieved]);
-      }
-    });
-  }, [fetchAgain, messages, notification, setFetchAgain, setNotification]);
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
-      socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
           headers: {
@@ -144,12 +144,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           config
         );
 
-        socket.emit("new message", data);
+        peer.send(newMessage);
 
         setMessages([...messages, data]);
       } catch (error) {
         toast({
-          title: "Error Occured!",
+          title: "Error Occurred!",
           description: "Failed to send the Message",
           status: "error",
           duration: 5000,
@@ -168,7 +168,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     if (!typing) {
       setTyping(true);
-      socket.emit("typing", selectedChat._id);
+      ws.send(JSON.stringify({ type: "typing", chatId: selectedChat._id }));
     }
 
     let lastTypingTime = new Date().getTime();
@@ -177,8 +177,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
 
-      if ((timeDiff >= timerLength && !typing) || !newMessage) {
-        socket.emit("stop typing", selectedChat._id);
+      if (timeDiff >= timerLength && typing) {
+        ws.send(JSON.stringify({ type: "stop typing", chatId: selectedChat._id }));
         setTyping(false);
       }
     }, timerLength);

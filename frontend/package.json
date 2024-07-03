@@ -29,6 +29,7 @@
     "react-scripts": "^5.0.1",
     "react-scrollable-feed": "^2.0.2",
     "resolve-url-loader": "^5.0.0",
+    "simple-peer": "^9.11.1",
     "socket.io-client": "^4.7.5",
     "svgo": "^3.3.2",
     "web-vitals": "^2.1.4"
