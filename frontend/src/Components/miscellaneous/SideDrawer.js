@@ -37,7 +37,7 @@ const SideDrawer = () => {
   const [loadingChat, setLoadingChat] = useState();
   const navigate = useNavigate();
   // dotenv.config();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   const handleLogout = () => {
     console.log("Logging out:", JSON.parse(localStorage.getItem("userInfo"))); // Log user info
     localStorage.removeItem("userInfo");

@@ -21,8 +21,8 @@ import io from "socket.io-client";
 import animationData from "../Animations/Typing.json";
 // const dotenv = require("dotenv");
 // dotenv.config();
-const API_URL = "https://chatting-application-roan.vercel.app";
-const ENDPOINT = "https://chatting-application-roan.vercel.app";
+const API_URL = "https://my-chat-app-backend-ten.vercel.app";
+const ENDPOINT = "https://my-chat-app-backend-ten.vercel.app";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {

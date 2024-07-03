@@ -31,7 +31,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const [loading, setLoading] = useState(false);
   const [renameLoading, setRenameLoading] = useState(false);
   const toast = useToast();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   const handleRemove = async (user1) => {
     if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
       toast({

@@ -9,7 +9,7 @@ import { Image } from "@chakra-ui/react";
 const Signup = () => {
   const navigate = useNavigate();
   // dotenv.config();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");

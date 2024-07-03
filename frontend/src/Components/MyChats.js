@@ -11,7 +11,7 @@ const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
   const toast = useToast();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   
   const fetchChats = async () => {
     try {

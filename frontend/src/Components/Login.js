@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // dotenv.config();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === "email") {

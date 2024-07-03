@@ -31,7 +31,7 @@ const GroupChatModal = ({ children }) => {
 
   const { user, chats, setChats } = ChatState();
   // dotenv.config();
-  const API_URL = "https://chatting-application-roan.vercel.app";
+  const API_URL = "https://my-chat-app-backend-ten.vercel.app";
   const handleGroup = (userToAdd) => {
     if (selectedUsers.some((u) => u._id === userToAdd._id)) {
       toast({
