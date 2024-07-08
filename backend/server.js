@@ -44,8 +44,8 @@ const PORT = process.env.PORT || 5000; // Set a default port if PORT environment
 
 const server = app.listen(PORT, console.log(`Server started at port ${PORT}`));
 
-const WebSocket = require("ws");
-const wss = new WebSocket.Server({ server });
+// const WebSocket = require("ws");
+const wss = new WebSocket({ server });
 
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
