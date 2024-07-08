@@ -45,7 +45,7 @@ const PORT = process.env.PORT || 5000; // Set a default port if PORT environment
 const server = app.listen(PORT, console.log(`Server started at port ${PORT}`));
 
 // const WebSocket = require("ws");
-const wss = new WebSocket({ server });
+const wss = new WebSocket("my-chat-app-backend-ten.vercel.app");
 
 wss.on("connection", (ws) => {
   ws.on("message", (message) => {
