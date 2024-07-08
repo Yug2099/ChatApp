@@ -44,13 +44,13 @@ const PORT = process.env.PORT || 5000; // Set a default port if PORT environment
 
 const server = app.listen(PORT, console.log(`Server started at port ${PORT}`));
 
-const WebSocket = require("ws");
-const wss = new WebSocket({server});
+// const WebSocket = require("ws");
+const WebSocket = new WebSocket({server});
 
-wss.on("connection", (ws) => {
+WebSocket.on("connection", (ws) => {
   ws.on("message", (message) => {
     // Broadcast the message to all connected clients
-    wss.clients.forEach((client) => {
+    WebSocket.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
       }

@@ -79,7 +79,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     // Set up WebSocket connection for signaling
-    const wsConnection = new WebSocket("wss://my-chat-app-backend-ten.vercel.app");
+    const wsConnection = new WebSocket(
+      "wss://my-chat-app-backend-ten.vercel.app"
+    );
     setWs(wsConnection);
 
     wsConnection.onmessage = (event) => {
@@ -177,7 +179,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       var timeDiff = timeNow - lastTypingTime;
 
       if (timeDiff >= timerLength && typing) {
-        ws.send(JSON.stringify({ type: "stop typing", chatId: selectedChat._id }));
+        ws.send(
+          JSON.stringify({ type: "stop typing", chatId: selectedChat._id })
+        );
         setTyping(false);
       }
     }, timerLength);
