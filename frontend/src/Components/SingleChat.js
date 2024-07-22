@@ -260,7 +260,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )} */}
-              <Input
+              <textarea
                 variant="filled"
                 bg="#E0E0E0"
                 placeholder="Enter a message..."
